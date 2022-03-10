@@ -4,12 +4,12 @@ import axios from "./axios";
 import requests from "./Requests";
 
 function Banner() {
-  const [movie, setMovie] = useState([]);
+  const [movie, setmovie] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(requests.fetchTrending);
-      setMovie(
+      const request = await axios.get(requests.fetchNetflixOriginals);
+      setmovie(
         request.data.results[
           Math.floor(Math.random() * request.data.results.length - 1)
         ]
@@ -35,16 +35,15 @@ function Banner() {
       }}
     >
       <div className="banner__contents">
-        <h1 className="banner__title">Movie Name</h1>
+        <h1 className="banner__title">
+          {movie?.title || movie?.name || movie.original_name}
+        </h1>
         <div className="banner__buttons">
           <button className="banner__button">Play</button>
           <button className="banner__button">My List</button>
         </div>
         <h1 className="banner__description">
-          {truncate(
-            `this is the test descriptionthis is the test descriptionthis is the test descriptionthis is the test descriptionthis is the test descriptionthis is the test descriptionthis is the test descriptionthis is the test description`,
-            150
-          )}
+          {truncate(movie?.overview, 170)}
         </h1>
       </div>
       <div className="banner--fadebottom" />
